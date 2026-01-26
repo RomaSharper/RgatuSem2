@@ -1,0 +1,108 @@
+using System.Text;
+using RgatuSem2.Entities;
+
+namespace RgatuSem2.Utils;
+
+public class FileResolver(string filePath)
+{
+    private readonly string _filePath = filePath ?? throw new ArgumentNullException(nameof(filePath));
+
+    private static void WriteBook(BinaryWriter writer, Book book)
+    {
+        writer.Write(book.AuthorSurname ?? string.Empty);
+        writer.Write(book.Name ?? string.Empty);
+        writer.Write(book.Year);
+    }
+
+    private static Book ReadBook(BinaryReader reader)
+    {
+        string authorSurname = reader.ReadString();
+        string name = reader.ReadString();
+        int year = reader.ReadInt32();
+        return new Book(authorSurname, name, year);
+    }
+
+    public List<Book> Books
+    {
+        get
+        {
+            var books = new List<Book>();
+
+            if (!File.Exists(_filePath))
+            {
+                File.Create(_filePath);
+                return books;
+            }
+
+            try
+            {
+                using var stream = File.OpenRead(_filePath);
+                using var reader = new BinaryReader(stream, Encoding.UTF8);
+
+                while (stream.Position < stream.Length)
+                {
+                    books.Add(ReadBook(reader));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка чтения файла: {ex.Message}");
+            }
+
+            return books;
+        }
+    }
+
+    public void SetBooks(List<Book> books)
+    {
+        try
+        {
+            using var stream = File.Create(_filePath);
+            using var writer = new BinaryWriter(stream, Encoding.UTF8);
+
+            foreach (var book in books)
+            {
+                WriteBook(writer, book);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Ошибка записи файла: {ex.Message}");
+        }
+    }
+
+    public Book AddBook(Book book)
+    {
+        try
+        {
+            using var stream = File.Open(_filePath, FileMode.Append, FileAccess.Write);
+            using var writer = new BinaryWriter(stream, Encoding.UTF8);
+
+            WriteBook(writer, book);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Ошибка добавления книги: {ex.Message}");
+        }
+        return book;
+    }
+
+    public Book RemoveBook(Book bookToRemove)
+    {
+        var updated = Books.Where(b => b != bookToRemove).ToList();
+        SetBooks(updated);
+        return bookToRemove;
+    }
+
+    public void Clear()
+    {
+        try
+        {
+            File.WriteAllBytes(_filePath, []);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Ошибка очистки файла: {ex.Message}");
+        }
+    }
+}

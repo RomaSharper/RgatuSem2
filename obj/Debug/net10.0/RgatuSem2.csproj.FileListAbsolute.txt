@@ -1,0 +1,14 @@
+D:\Program Files\Code\Projects\~\Cs\RgatuSem2\bin\Debug\net10.0\RgatuSem2.exe
+D:\Program Files\Code\Projects\~\Cs\RgatuSem2\bin\Debug\net10.0\RgatuSem2.deps.json
+D:\Program Files\Code\Projects\~\Cs\RgatuSem2\bin\Debug\net10.0\RgatuSem2.runtimeconfig.json
+D:\Program Files\Code\Projects\~\Cs\RgatuSem2\bin\Debug\net10.0\RgatuSem2.dll
+D:\Program Files\Code\Projects\~\Cs\RgatuSem2\bin\Debug\net10.0\RgatuSem2.pdb
+D:\Program Files\Code\Projects\~\Cs\RgatuSem2\obj\Debug\net10.0\RgatuSem2.GeneratedMSBuildEditorConfig.editorconfig
+D:\Program Files\Code\Projects\~\Cs\RgatuSem2\obj\Debug\net10.0\RgatuSem2.AssemblyInfoInputs.cache
+D:\Program Files\Code\Projects\~\Cs\RgatuSem2\obj\Debug\net10.0\RgatuSem2.AssemblyInfo.cs
+D:\Program Files\Code\Projects\~\Cs\RgatuSem2\obj\Debug\net10.0\RgatuSem2.csproj.CoreCompileInputs.cache
+D:\Program Files\Code\Projects\~\Cs\RgatuSem2\obj\Debug\net10.0\RgatuSem2.dll
+D:\Program Files\Code\Projects\~\Cs\RgatuSem2\obj\Debug\net10.0\refint\RgatuSem2.dll
+D:\Program Files\Code\Projects\~\Cs\RgatuSem2\obj\Debug\net10.0\RgatuSem2.pdb
+D:\Program Files\Code\Projects\~\Cs\RgatuSem2\obj\Debug\net10.0\RgatuSem2.genruntimeconfig.cache
+D:\Program Files\Code\Projects\~\Cs\RgatuSem2\obj\Debug\net10.0\ref\RgatuSem2.dll
