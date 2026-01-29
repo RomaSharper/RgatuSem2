@@ -26,7 +26,7 @@ public class FileResolver(string filePath)
     {
         get
         {
-            var books = new List<Book>();
+            List<Book> books = [];
 
             if (!File.Exists(_filePath))
             {
@@ -36,8 +36,8 @@ public class FileResolver(string filePath)
 
             try
             {
-                using var stream = File.OpenRead(_filePath);
-                using var reader = new BinaryReader(stream, Encoding.UTF8);
+                using Stream stream = File.Open(_filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+                using BinaryReader reader = new(stream, Encoding.UTF8);
 
                 while (stream.Position < stream.Length)
                 {
@@ -57,8 +57,8 @@ public class FileResolver(string filePath)
     {
         try
         {
-            using var stream = File.Create(_filePath);
-            using var writer = new BinaryWriter(stream, Encoding.UTF8);
+            using Stream stream = File.Create(_filePath);
+            using BinaryWriter writer = new(stream, Encoding.UTF8);
 
             foreach (var book in books)
             {
@@ -71,38 +71,40 @@ public class FileResolver(string filePath)
         }
     }
 
-    public Book AddBook(Book book)
+    public Result AddBook(Book book)
     {
         try
         {
-            using var stream = File.Open(_filePath, FileMode.Append, FileAccess.Write);
-            using var writer = new BinaryWriter(stream, Encoding.UTF8);
+            using Stream stream = File.Open(_filePath, FileMode.Append, FileAccess.Write);
+            using BinaryWriter writer = new(stream, Encoding.UTF8);
 
             WriteBook(writer, book);
+            return new Result(true);
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Ошибка добавления книги: {ex.Message}");
+            return new Result(false, new ArgumentException("Ошибка при добавлении книги", ex));
         }
-        return book;
     }
 
-    public Book RemoveBook(Book bookToRemove)
+    public Result RemoveBook(Book bookToRemove)
     {
         var updated = Books.Where(b => b != bookToRemove).ToList();
+        if (updated.Count == Books.Count) return new Result(false);
         SetBooks(updated);
-        return bookToRemove;
+        return new Result(true);
     }
 
-    public void Clear()
+    public Result Clear()
     {
         try
         {
             File.WriteAllBytes(_filePath, []);
+            return new Result(true);
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Ошибка очистки файла: {ex.Message}");
+            return new Result(false, ex);
         }
     }
 }

@@ -17,6 +17,15 @@ static class BookUtils
         );
     }
 
-    public static List<Book> GetInformaticsBooks(List<Book> books)
-        => [.. books.Where(book => book.Name == "Информатика")];
+    public static string GetInformaticsInfo(List<Book> books)
+    {
+        var matches = books.Where(b => b.Name == "Информатика").Select(b => $"{b.AuthorSurname}, {b.Year}").ToList();
+
+        return matches.Count switch
+        {
+            1 => $"Найдена книга \"Информатика\":\n{matches[0]}",
+            > 1 => $"Найдены книги \"Информатика\":\n{string.Join("\n", matches)}",
+            _ => "Книги \"Информатика\" не найдено"
+        };
+    }
 }

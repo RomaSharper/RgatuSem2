@@ -26,30 +26,6 @@ class Program
 
     static void Main()
     {
-        Log();
-        Log("0. Запись и получение:");
-        Resolver.SetBooks(Books);
-        Log(Resolver.Books);
-
-        Log("\n1. Добавление книги:");
-        Log(Resolver.AddBook(Books[0]));
-        Log(Resolver.AddBook(new Book("Булгаков", "Собачье сердце", 1925)));
-        Log();
-        Log(Resolver.Books);
-
-        Log("\n2. Удаление книги:");
-        Log(Resolver.RemoveBook(Books[0]));
-        Log();
-        Log(Resolver.Books);
-
-        Log("\n3. Названия книг, изданных позднее 2010:");
-        Log(BookUtils.GetNamesByAuthorAfter2010(Resolver.Books, "Трамп"));
-        
-        Log("\n4. Кол-во книг каждого автора:");
-        Log(BookUtils.GetBooksAuthorAndCounts(Resolver.Books));
-
-        Log($"\n5. Книги с названием Информатика:");
-        Log(BookUtils.GetInformaticsBooks(Resolver.Books));
-        Log();
+        Cli.Run(Resolver);
     }
 }

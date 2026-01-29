@@ -2,6 +2,11 @@ namespace RgatuSem2.Utils;
 
 public static class Logger
 {
+    public static void LogInline<T>(T obj)
+    {
+        Console.Write(obj);
+    }
+
     public static void Log<T>(T obj)
     {
         Console.WriteLine(obj);
