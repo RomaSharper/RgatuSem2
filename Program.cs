@@ -43,12 +43,12 @@ class Program
         Log(Resolver.Books);
 
         Log("\n3. Названия книг, изданных позднее 2010:");
-        Log(BookUtils.GetBookNamesYearLaterThan(Resolver.Books));
+        Log(BookUtils.GetNamesByAuthorAfter2010(Resolver.Books, "Трамп"));
         
         Log("\n4. Кол-во книг каждого автора:");
         Log(BookUtils.GetBooksAuthorAndCounts(Resolver.Books));
 
-        Log($"\n5. Книга/и с названием {InformaticsBook.Name}:");
+        Log($"\n5. Книги с названием Информатика:");
         Log(BookUtils.GetInformaticsBooks(Resolver.Books));
         Log();
     }

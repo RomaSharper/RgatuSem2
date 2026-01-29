@@ -4,8 +4,10 @@ namespace RgatuSem2.Utils;
 
 static class BookUtils
 {
-    public static List<string> GetBookNamesYearLaterThan(List<Book> books, int year = 2010)
-        => [.. books.Where(book => book.Year > year).Select(book => book.Name)];
+    public static List<string> GetNamesByAuthorAfter2010(List<Book> books, string author)
+    {
+        return [.. books.Where(b => b.AuthorSurname == author && b.Year > 2010).Select(b => b.Name)];
+    }
 
     public static Dictionary<string, int> GetBooksAuthorAndCounts(List<Book> books)
     {
@@ -15,6 +17,6 @@ static class BookUtils
         );
     }
 
-    public static List<InformaticsBook> GetInformaticsBooks(List<Book> books)
-        => [.. books.Where(book => book.Name == InformaticsBook.Name).Select(InformaticsBook.FromBook)];
+    public static List<Book> GetInformaticsBooks(List<Book> books)
+        => [.. books.Where(book => book.Name == "Информатика")];
 }
