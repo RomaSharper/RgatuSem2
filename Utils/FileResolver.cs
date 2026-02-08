@@ -1,5 +1,6 @@
 using System.Text;
 using RgatuSem2.Entities;
+using static RgatuSem2.Utils.Logger;
 
 namespace RgatuSem2.Utils;
 
@@ -16,9 +17,9 @@ public class FileResolver(string filePath)
 
     private static Book ReadBook(BinaryReader reader)
     {
-        string authorSurname = reader.ReadString();
-        string name = reader.ReadString();
-        int year = reader.ReadInt32();
+        var authorSurname = reader.ReadString();
+        var name = reader.ReadString();
+        var year = reader.ReadInt32();
         return new Book(authorSurname, name, year);
     }
 
@@ -46,7 +47,7 @@ public class FileResolver(string filePath)
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Ошибка чтения файла: {ex.Message}");
+                Log($"Ошибка чтения файла: {ex.Message}");
             }
 
             return books;
@@ -59,7 +60,6 @@ public class FileResolver(string filePath)
         {
             using Stream stream = File.Create(_filePath);
             using BinaryWriter writer = new(stream, Encoding.UTF8);
-
             foreach (var book in books)
             {
                 WriteBook(writer, book);
@@ -67,7 +67,7 @@ public class FileResolver(string filePath)
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Ошибка записи файла: {ex.Message}");
+            Log($"Ошибка записи файла: {ex.Message}");
         }
     }
 
@@ -77,7 +77,6 @@ public class FileResolver(string filePath)
         {
             using Stream stream = File.Open(_filePath, FileMode.Append, FileAccess.Write);
             using BinaryWriter writer = new(stream, Encoding.UTF8);
-
             WriteBook(writer, book);
             return new Result(true);
         }
@@ -90,7 +89,10 @@ public class FileResolver(string filePath)
     public Result RemoveBook(Book bookToRemove)
     {
         var updated = Books.Where(b => b != bookToRemove).ToList();
-        if (updated.Count == Books.Count) return new Result(false);
+        if (updated.Count == Books.Count)
+        {
+            return new Result(false);
+        }
         SetBooks(updated);
         return new Result(true);
     }

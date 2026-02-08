@@ -3,7 +3,7 @@ using static RgatuSem2.Utils.Logger;
 
 namespace RgatuSem2.Utils;
 
-internal static class Cli
+public static class Cli
 {
     public static void Run(FileResolver resolver)
     {
@@ -130,12 +130,16 @@ internal static class Cli
         }
 
         var titles = BookUtils.GetNamesByAuthorAfter2010(resolver.Books, author);
+        Log($"\nКниги автора \"{author}\" после 2010 года:");
 
-        Log($"\nКниги {author} после 2010 года:");
         if (titles.Count == 0)
+        {
             Log("Не найдено.");
+        }
         else
-            titles.ForEach(t => Log($" • {t}"));
+        {
+            titles.ForEach(t => Log($"* {t}"));
+        }
     }
 
     private static void ShowAuthorStatistics(FileResolver resolver)
@@ -170,6 +174,6 @@ internal static class Cli
             return;
         }
 
-        books.ForEach(b => Log($" * {b}"));
+        books.ForEach(b => Log($"* {b}"));
     }
 }

@@ -2,7 +2,7 @@ using RgatuSem2.Entities;
 
 namespace RgatuSem2.Utils;
 
-static class BookUtils
+public static class BookUtils
 {
     public static List<string> GetNamesByAuthorAfter2010(List<Book> books, string author)
     {
