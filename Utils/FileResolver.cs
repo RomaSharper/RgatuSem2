@@ -28,10 +28,9 @@ public class FileResolver(string filePath)
         get
         {
             List<Book> books = [];
-
             if (!File.Exists(_filePath))
             {
-                File.Create(_filePath);
+                File.Create(_filePath).Close();
                 return books;
             }
 
@@ -49,7 +48,6 @@ public class FileResolver(string filePath)
             {
                 Log($"Ошибка чтения файла: {ex.Message}");
             }
-
             return books;
         }
     }
@@ -89,24 +87,8 @@ public class FileResolver(string filePath)
     public Result RemoveBook(Book bookToRemove)
     {
         var updated = Books.Where(b => b != bookToRemove).ToList();
-        if (updated.Count == Books.Count)
-        {
-            return new Result(false);
-        }
+        if (updated.Count == Books.Count) return new Result(false);
         SetBooks(updated);
         return new Result(true);
-    }
-
-    public Result Clear()
-    {
-        try
-        {
-            File.WriteAllBytes(_filePath, []);
-            return new Result(true);
-        }
-        catch (Exception ex)
-        {
-            return new Result(false, ex);
-        }
     }
 }
